@@ -1,0 +1,3 @@
+*.sqlite
+.vscode/
+app/__pycache__
