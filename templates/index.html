@@ -4,9 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL SHORTENER</title>
-    <!-- <link rel="stylesheet" href="https://codepen.io/gymratpacks/pen/VKzBEp#0"> -->
     <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
-
     <style>
         *,
         *:before,
@@ -118,11 +116,9 @@
                     <input type="text" id="url" name="url">
                     <button type="submit">Shorten</button>
                 </fieldset>
-
                 {% if payload %}
                 <fieldset>
                     <legend><span class="number">2</span> Your Short URL</legend>
-
                     <h2>
                         <script>
                             document.write(window.location.host)
@@ -130,13 +126,11 @@
                     </h2>
                     {% else %}
                 </fieldset>
-
                 {% endif %}
-
+                <a href="/urls"><small>See List</small></a>
             </form>
         </div>
     </div>
-
 </body>
 
 </html>
