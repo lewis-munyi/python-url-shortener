@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up Form</title>
-    <link rel="stylesheet" href="https://codepen.io/gymratpacks/pen/VKzBEp#0">
+    <title>URL SHORTENER</title>
+    <!-- <link rel="stylesheet" href="https://codepen.io/gymratpacks/pen/VKzBEp#0"> -->
     <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
 
     <style>
@@ -119,18 +119,19 @@
                     <button type="submit">Shorten</button>
                 </fieldset>
 
+                {% if payload %}
                 <fieldset>
                     <legend><span class="number">2</span> Your Short URL</legend>
-                    {% if payload %}
+
                     <h2>
                         <script>
                             document.write(window.location.host)
                         </script>/{{ payload["code"] }}
                     </h2>
                     {% else %}
-
-                    {% endif %}
                 </fieldset>
+
+                {% endif %}
 
             </form>
         </div>

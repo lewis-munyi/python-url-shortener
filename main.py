@@ -1,5 +1,4 @@
 import os
-import urllib
 from uuid import uuid4
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
