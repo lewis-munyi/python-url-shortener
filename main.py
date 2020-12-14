@@ -125,4 +125,4 @@ if __name__ == '__main__':
     except:
         print("Error Migrating tables. They might already exist")
 
-    app.run(debug=True)
+    app.run(debug=False)
