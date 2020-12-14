@@ -37,30 +37,47 @@ class UrlSchema(ma.Schema):
 url_schema = UrlSchema()
 urls_schema = UrlSchema(many=True)
 
-@app.route('/', methods=['GET'])
-def load_home():
-    return render_template('index.html', payload = None)
-
 # Create a URL
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['GET', 'POST', 'DELETE'])
 def add_url():
+    # Load Home page
+    if request.method == "GET":
+        return render_template('index.html', payload = None)
+
+    # Delete URL
+    if request.method == "DELETE":
+        # Get URL code
+        code = request.form['url']
+        url = Url.query.get(code)
+
+        # Delete record
+        db.session.delete(url)
+        db.session.commit()
+
+        return url_schema.jsonify(url)
+
     try:
+        # Delete URL
         if( request.form['delete']):
+            # Get URL code
             code = request.form['url']
             url = Url.query.get(code)
+
+            # Delete record
             db.session.delete(url)
             db.session.commit()
-            # new = Url.query.all()
-            # return url_schema.jsonify(url)
-            # return jsonify("Delete")
+
+            # Return new URL list
             result = urls_schema.dump(Url.query.all())
             return render_template("table.html", payload = result)
     except:
         url = request.form['url']
 
+        # Assert valid link is supplied
         if(not bool(urlparse(url).scheme)):
             return render_template('index.html', payload = "Error")
 
+        # Return Link if exists
         for link in Url.query.all():
             if(link.url == url):
                 return render_template('index.html', payload = link)
@@ -69,11 +86,13 @@ def add_url():
         loop = True
         while(loop):
             code = str(uuid4())[:6]
-            exists = Url.query.get(code)
 
+            # If code already exists create a new one, otherwise break
+            exists = Url.query.get(code)
             if(exists == None):
                 loop = False
 
+        # Save new URL object
         new_url = Url(code, url, datetime.now())
         db.session.add(new_url)
         db.session.commit()
@@ -97,15 +116,13 @@ def get_url(code):
     url = url_schema.dump(url)
     return redirect(url["url"])
 
-# Delete Short URL
-@app.route('/', methods=['DELETE'])
-def delete_url():
-    code = request.form['url']
-    url = Url.query.get(code)
-    db.session.delete(url)
-    db.session.commit()
-    return url_schema.jsonify(url)
-
 # Run Server
 if __name__ == '__main__':
-  app.run(debug=True)
+    # Run migrations
+    try:
+        db.create_all()
+        print("Migrated tables successfully")
+    except:
+        print("Error Migrating tables. They might already exist")
+
+    app.run(debug=True)
