@@ -11,7 +11,6 @@ app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://VynHK8GlPX:ghq51q8BRG@remotemysql.com:3306/VynHK8GlPX"
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://VynHK8GlPX:ghq51q8BRG@remotemysql.com:3306/VynHK8GlPX'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Init db
 db = SQLAlchemy(app)
